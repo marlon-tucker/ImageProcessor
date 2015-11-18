@@ -13,7 +13,7 @@ namespace ImageProcessor.Configuration
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Reflection;
     using ImageProcessor.Common.Extensions;
     using ImageProcessor.Common.Helpers;
     using ImageProcessor.Imaging.Formats;
@@ -69,8 +69,8 @@ namespace ImageProcessor.Configuration
             if (this.SupportedImageFormats == null)
             {
                 List<Type> availableTypes =
-                    TypeFinder.GetAssembliesWithKnownExclusions()
-                        .SelectMany(a => a.GetLoadableTypes())
+                    Assembly.GetExecutingAssembly()
+                        .GetLoadableTypes()
                         .Where(t => type.IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
                         .ToList();
 
